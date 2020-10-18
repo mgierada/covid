@@ -25,7 +25,9 @@ class Covid():
         selected_country = data[mask]
         total_cases = selected_country['Cumulative_cases']
         day_reported = selected_country['Date_reported']
-        selected_country.plot(logy=True, title=country)
+        figure, axes = plt.subplots(1, 2)
+        selected_country.plot(ax=axes[0], logy=True, title=country)
+        selected_country['New_cases'].plot(ax=axes[1])
         # plt.plot(day_reported, total_cases)
         plt.show()
 
