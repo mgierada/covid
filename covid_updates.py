@@ -7,6 +7,7 @@ class Covid():
         self.link = link
 
     def get_data(self):
+        ''' Download the latest Covid dateset from WHO website '''
         data = os.path.join(os.getcwd(), 'covid_dataset.csv')
         request.urlretrieve(self.link, data)
 
