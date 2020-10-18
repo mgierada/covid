@@ -16,7 +16,6 @@ class Covid():
     def load_data(self):
         data = pd.read_csv(self.data_file)
         data.columns = [col.strip() for col in data.columns]
-        # data['Date_reported'] = pd.to_datetime[data['Date_reported']]
         data.index = pd.to_datetime(data['Date_reported'])
         return data
 
@@ -26,7 +25,7 @@ class Covid():
         selected_country = data[mask]
         total_cases = selected_country['Cumulative_cases']
         day_reported = selected_country['Date_reported']
-        selected_country.plot()
+        selected_country.plot(logy=True, title=country)
         # plt.plot(day_reported, total_cases)
         plt.show()
 
