@@ -15,12 +15,12 @@ class Covid():
     def load_data(self):
         data = pd.read_csv(self.data_file)
         data.columns = [col.strip() for col in data.columns]
-        print(data.Country)
         return data
 
     def analyze(self, country):
         data = self.load_data()
-        # print(data)
+        # data.columns['Country'] == country
+        data.loc[:, ['Country']]
 
 
 link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
