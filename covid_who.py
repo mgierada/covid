@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from urllib import request
 
 
-class Covid():
+class Covid_WHO():
     def __init__(self, link):
         self.link = link
         self.data_file = os.path.join(os.getcwd(), 'covid_dataset.csv')
@@ -39,4 +39,4 @@ class Covid():
 link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
 countries = ['Poland', 'United States of America']
 
-Covid(link).plot(countries)
+Covid_WHO(link).plot(countries)
