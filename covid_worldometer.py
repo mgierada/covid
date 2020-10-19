@@ -1,5 +1,6 @@
 import os
 import re
+from matplotlib.pyplot import annotate
 import pandas as pd
 import matplotlib.pyplot as plt
 import requests
@@ -19,6 +20,7 @@ class Covid_Worldsometer:
             0].iloc[:-1]
         data.rename(columns={'Country,Other': 'Country'}, inplace=True)
         data.to_csv(self.data_file)
+        return data
 
     def analyze(self, country):
         data = self.get_data()
@@ -26,6 +28,13 @@ class Covid_Worldsometer:
         country = data[mask]
         return country
 
+    def plot(self, country):
+        country = self.analyze(country)
+        print(country['NewCases'])
+        country['NewCases'].plot()
+        plt.show()
+
 
 url = 'https://www.worldometers.info/coronavirus/'
-Covid_Worldsometer(url).get_data()
+
+Covid_Worldsometer(url).plot('Poland')
