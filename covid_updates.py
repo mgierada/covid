@@ -23,15 +23,31 @@ class Covid():
         data = self.load_data()
         mask = data.loc[:, 'Country'] == country
         selected_country = data[mask]
-        total_cases = selected_country['Cumulative_cases']
-        day_reported = selected_country['Date_reported']
-        figure, axes = plt.subplots(1, 2)
-        selected_country.plot(ax=axes[0], logy=True, title=country)
-        selected_country['New_cases'].plot(ax=axes[1])
+        return selected_country
+        # total_cases = selected_country['Cumulative_cases']
+        # day_reported = selected_country['Date_reported']
+        # figure, axes = plt.subplots(1, 2)
+        # selected_country.plot(ax=axes[0], logy=True, title=country)
+        # selected_country['New_cases'].plot(ax=axes[1])
         # plt.plot(day_reported, total_cases)
-        plt.show()
+        # plt.show()
+
+    def plot(self, country):
+        _, axes = plt.subplots(1, 2)
+        selected_country = self.analyze(country)
+        plot1 = selected_country.plot(ax=axes[0], logy=True, title=country)
+        selected_country['New_cases'].plot(ax=axes[1])
+        return plot1
+
+    def show(self):
+        plots = []
+        countries = ['Poland', 'United States of America']
+        for country in countries:
+            plot = self.plot(country)
+            plots.append(plot)
+        plt.subplot()
 
 
 link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
 
-Covid(link).analyze('Poland')
+Covid(link).show()
