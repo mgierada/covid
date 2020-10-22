@@ -55,6 +55,7 @@ class Covid_WHO():
         log_new = np.log(new)
         log_days = np.log(days)
         a, b = np.polyfit(days, log_new, 1)
+        print(a, b)
         y = np.exp(b) * np.exp(a*days)
         plt.plot(days, new, "o")
         plt.plot(days, y)
@@ -67,5 +68,5 @@ class Covid_WHO():
 link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
 countries = ['Poland', 'United States of America']
 
-# Covid_WHO(link).plot(countries)
-Covid_WHO(link).predict('Poland')
+Covid_WHO(link).plot(countries)
+# Covid_WHO(link).predict('Poland')
