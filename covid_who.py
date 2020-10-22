@@ -1,7 +1,12 @@
+from math import log
+from operator import ne
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 from urllib import request
+from sklearn.linear_model import LogisticRegression
+from scipy.optimize import curve_fit
 
 
 class Covid_WHO():
@@ -27,16 +32,62 @@ class Covid_WHO():
 
     def plot(self, countries):
         _, axes = plt.subplots(2, 2)
-        countries = ['Poland', 'United States of America']
+        # plt.figure(figsize=(20, 20))
         for num, country in enumerate(countries):
             selected_country = self.analyze(country)
             selected_country.plot(ax=axes[num][0], logy=True, title=country)
             selected_country['New_cases'].plot(ax=axes[num][1])
         plt.tight_layout()
+        plt.gcf().set_size_inches(15, 15)
         plt.show()
+
+    def exponential_fit(self, x, a, b, c):
+        return a*np.exp(-b*x) + c
+
+    def predict(self, country):
+        # self.get_data()
+        data = self.analyze(country)
+        new_cases = data['New_cases']
+        # new_cases = data['New_cases'].to_string(index=False)
+        new = np.array(new_cases)
+        new[new == 0] = 1
+        days = np.arange(1, len(new_cases) + 1)
+        log_new = np.log(new)
+        log_days = np.log(days)
+        a, b = np.polyfit(days, log_new, 1)
+        y = np.exp(b) * np.exp(a*days)
+        plt.plot(days, new, "o")
+        plt.plot(days, y)
+        plt.show()
+
+        # new = np.array(new_cases)
+        # new_array = np.array(data.index.to_pydatetime(),
+        #                      dtype=np.datetime64)
+        # days = np.matrix(np.arange(len(new)))
+        # days = days.reshape(-1, 1)
+
+        # print(days)
+        # print(type(new))
+
+        # days = np.arange(len(new))
+
+        # day_reported = data['Date_reported'].to_string(index=False)
+        # day_reported = np.array(data.index)
+        # print(day_reported)
+        # print(day_reported)
+        # print(len(day_reported))
+        # model = LogisticRegression()
+        # model.fit(days, days)
+        # day_new = [['2020-10-20']]
+        # predicted_cases = model.predict(day_new)
+        # print(predicted_cases)
+
+        # new_cases.plot()
+        # plt.show()
 
 
 link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
 countries = ['Poland', 'United States of America']
 
-Covid_WHO(link).plot(countries)
+# Covid_WHO(link).plot(countries)
+Covid_WHO(link).predict('Poland')
