@@ -60,28 +60,6 @@ class Covid_WHO():
         plt.plot(days, y)
         plt.show()
 
-        # new = np.array(new_cases)
-        # new_array = np.array(data.index.to_pydatetime(),
-        #                      dtype=np.datetime64)
-        # days = np.matrix(np.arange(len(new)))
-        # days = days.reshape(-1, 1)
-
-        # print(days)
-        # print(type(new))
-
-        # days = np.arange(len(new))
-
-        # day_reported = data['Date_reported'].to_string(index=False)
-        # day_reported = np.array(data.index)
-        # print(day_reported)
-        # print(day_reported)
-        # print(len(day_reported))
-        # model = LogisticRegression()
-        # model.fit(days, days)
-        # day_new = [['2020-10-20']]
-        # predicted_cases = model.predict(day_new)
-        # print(predicted_cases)
-
         # new_cases.plot()
         # plt.show()
 
