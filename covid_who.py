@@ -11,7 +11,7 @@ from scipy.optimize import curve_fit
 
 class Covid_WHO():
     def __init__(self, link):
-        self.link = link
+        self.link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
         self.data_file = os.path.join(os.getcwd(), 'covid_dataset.csv')
 
     def get_data(self):
@@ -38,8 +38,9 @@ class Covid_WHO():
             selected_country.plot(ax=axes[num][0], logy=True, title=country)
             selected_country['New_cases'].plot(ax=axes[num][1])
         plt.tight_layout()
-        plt.gcf().set_size_inches(15, 15)
-        plt.show()
+        plt.gcf().set_size_inches(10, 10)
+        plt.savefig('plot.png')
+        # plt.show()
 
     def exponential_fit(self, x, a, b, c):
         return a*np.exp(-b*x) + c
@@ -65,8 +66,7 @@ class Covid_WHO():
         # plt.show()
 
 
-link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
 countries = ['Poland', 'United States of America']
 
-Covid_WHO(link).plot(countries)
+Covid_WHO().plot(countries)
 # Covid_WHO(link).predict('Poland')
