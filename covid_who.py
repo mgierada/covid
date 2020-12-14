@@ -10,7 +10,7 @@ from scipy.optimize import curve_fit
 
 
 class Covid_WHO():
-    def __init__(self, link):
+    def __init__(self):
         self.link = 'https://covid19.who.int/WHO-COVID-19-global-data.csv'
         self.data_file = os.path.join(os.getcwd(), 'covid_dataset.csv')
 
@@ -29,6 +29,20 @@ class Covid_WHO():
         mask = data.loc[:, 'Country'] == country
         selected_country = data[mask]
         return selected_country
+
+    def new_cases_to_death(self, country):
+        country_data = self.analyze(country)
+        new_cases = country_data['New_cases']
+        new_deaths = country_data['New_deaths']
+        # nans = new_case_to_new_deaths_ratio.isna()
+
+        # print(new_case_to_new_deaths_ratio)
+        country_data['New_cases_to_new_deaths_ratio'] = new_cases/new_deaths
+        country_data['New_cases_to_new_deaths_ratio'].interpolate(
+            method='linear', axis=0, inplace=True)
+        country_data['New_cases_to_new_deaths_ratio'].plot(
+            title='New cases to new death ratio')
+        plt.show()
 
     def plot(self, countries):
         _, axes = plt.subplots(2, 2)
@@ -66,7 +80,9 @@ class Covid_WHO():
         # plt.show()
 
 
-countries = ['Poland', 'United States of America']
-
-Covid_WHO().plot(countries)
+# countries = ['Poland', 'United States of America']
+countries = ['United States of America']
+# Covid_WHO().get_data()
+# Covid_WHO().plot(countries)
 # Covid_WHO(link).predict('Poland')
+Covid_WHO().new_cases_to_death('Poland')
