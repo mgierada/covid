@@ -44,6 +44,16 @@ class Covid_WHO():
             title='New cases to new death ratio')
         plt.show()
 
+    def new_death_to_cumultative_deaths(self, country):
+        country_data = self.analyze(country)
+        cumulative_deaths = country_data['Cumulative_deaths']
+        new_deaths = country_data['New_deaths']
+        country_data['New_deaths_to_cumulative_deaths'] = new_deaths / \
+            cumulative_deaths
+        country_data['New_deaths_to_cumulative_deaths'].plot(
+            title='New deaths to cumulative deaths')
+        plt.show()
+
     def plot(self, countries):
         _, axes = plt.subplots(2, 2)
         # plt.figure(figsize=(20, 20))
@@ -85,4 +95,4 @@ countries = ['United States of America']
 # Covid_WHO().get_data()
 # Covid_WHO().plot(countries)
 # Covid_WHO(link).predict('Poland')
-Covid_WHO().new_cases_to_death('Poland')
+Covid_WHO().new_death_to_cumultative_deaths('Poland')
