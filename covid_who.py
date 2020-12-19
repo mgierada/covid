@@ -75,13 +75,18 @@ class Covid_WHO():
         return country, max_new_deaths
 
     def overview(self, date):
-        country_max_new_cases, new_cases = self.get_country_with_max_new_cases(
+        country_max_new_cases, max_new_cases = self.get_country_with_max_new_cases(
             date)
-        country_max_new_deaths = self.get_country_with_max_new_deaths(date)
-        print('Country with the most new cases reported for {}'.format(date))
+        country_max_new_deaths, max_new_deaths = self.get_country_with_max_new_deaths(
+            date)
+        print('Country with the most new cases reported for {}:'.format(date))
+        print('==============================================================')
         print('    {}'.format(country_max_new_cases))
-        print('Country with the most new deaths reported for {}'.format(date))
+        print('    {} new cases'.format(max_new_cases))
+        print('Country with the most new deaths reported for {}:'.format(date))
+        print('==============================================================')
         print('    {}'.format(country_max_new_deaths))
+        print('    {} new deaths'.format(max_new_deaths))
 
     def plot(self, countries):
         _, axes = plt.subplots(2, 2)
