@@ -54,6 +54,35 @@ class Covid_WHO():
             title='New deaths to cumulative deaths')
         plt.show()
 
+    def get_country_with_max_new_cases(self, date):
+        data = self.load_data()
+        mask = data.loc[:, 'Date_reported'] == date
+        date_data = data[mask]
+        max_value_idx = date_data['New_cases'].argmax()
+        max_new_cases = date_data['New_cases'].max()
+        max_new_cases_country_data = date_data.iloc[max_value_idx]
+        country = max_new_cases_country_data['Country']
+        return country, max_new_cases
+
+    def get_country_with_max_new_deaths(self, date):
+        data = self.load_data()
+        mask = data.loc[:, 'Date_reported'] == date
+        date_data = data[mask]
+        max_value_idx = date_data['New_deaths'].argmax()
+        max_new_deaths = date_data['New_deaths'].max()
+        max_new_deaths_country_data = date_data.iloc[max_value_idx]
+        country = max_new_deaths_country_data['Country']
+        return country, max_new_deaths
+
+    def overview(self, date):
+        country_max_new_cases, new_cases = self.get_country_with_max_new_cases(
+            date)
+        country_max_new_deaths = self.get_country_with_max_new_deaths(date)
+        print('Country with the most new cases reported for {}'.format(date))
+        print('    {}'.format(country_max_new_cases))
+        print('Country with the most new deaths reported for {}'.format(date))
+        print('    {}'.format(country_max_new_deaths))
+
     def plot(self, countries):
         _, axes = plt.subplots(2, 2)
         # plt.figure(figsize=(20, 20))
@@ -95,4 +124,5 @@ countries = ['United States of America']
 # Covid_WHO().get_data()
 # Covid_WHO().plot(countries)
 # Covid_WHO(link).predict('Poland')
-Covid_WHO().new_death_to_cumultative_deaths('Poland')
+# Covid_WHO().new_death_to_cumultative_deaths('Poland')
+Covid_WHO().overview('2020-12-13')
